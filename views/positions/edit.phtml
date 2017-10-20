@@ -1,0 +1,37 @@
+<?php
+
+if ($data['position'] != null) {
+    $position = $data['position'];
+} else {
+    $position = [
+        'id' => 0,
+        'name' => '',
+        'description' => '',
+    ];
+}
+
+?>
+
+<div class="position__edit">
+    <h1 class="position__edit-title">Редактирование должности</h1>
+
+    <form class="form position__edit-form" action="/positions/edit">
+        <input type="hidden" name="id" value="<?= $position['id'] ?>">
+
+        <div class="form__input-wrap">
+            <label>
+                <span>Название:</span>
+                <input type="text" name="name" value="<?= $position['name'] ?>">
+            </label>
+        </div>
+
+        <div class="form__input-wrap">
+            <label>
+                <span>Описание:</span>
+                <textarea name="description"><?= $position['description'] ?></textarea>
+            </label>
+        </div>
+
+        <input type="submit" value="Сохранить">
+    </form>
+</div>

@@ -1,0 +1,7 @@
+<a href="/positions/edit">Добавить должность</a>
+
+<ol>
+    <?php foreach ($data['positions'] as $position): ?>
+        <li><a href="/positions/edit/<?= $position['id'] ?>"><?= $position['name'] ?></a></li>
+    <?php endforeach; ?>
+</ol>

@@ -16,7 +16,10 @@ class App
     public static function run($uri)
     {
         self::$router = new Router($uri);
-        self::$db = new DB(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
+        //self::$db = new DB(Config::get('db.host'), Config::get('db.user'), Config::get('db.password'), Config::get('db.db_name'));
+        $db_connection = new PDO("mysql:host=" . Config::get('db.host') . ";dbname=" . Config::get('db.db_name'), Config::get('db.user'), Config::get('db.password'));
+        $db_connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        self::$db = $db_connection;
 
         $controller_class = ucfirst(self::$router->getController()) . 'Controller';
         $controller_method = strtolower(self::$router->getMethodPrefix() . self::$router->getAction());
@@ -33,7 +36,7 @@ class App
         }
 
         $layout = self::$router->getRoute();
-        $layout_path = VIEWS_PATH . DS . $layout . '.html';
+        $layout_path = VIEWS_PATH . DS . $layout . '.phtml';
         $layout_view_object = new View(compact('content'), $layout_path);
 
         echo $layout_view_object->render();
